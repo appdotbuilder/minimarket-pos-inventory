@@ -17,7 +17,7 @@ const testUserInput: CreateUserInput = {
 
 const testLoginInput: LoginInput = {
   username: 'testuser',
-  password: 'password'
+  password: 'password123'
 };
 
 describe('auth handlers', () => {
@@ -99,7 +99,7 @@ describe('auth handlers', () => {
 
       const wrongPasswordLogin: LoginInput = {
         username: 'testuser',
-        password: 'wrongpassword'
+        password: 'wrongpassword123'
       };
 
       await expect(login(wrongPasswordLogin)).rejects.toThrow(/invalid credentials/i);
@@ -115,7 +115,12 @@ describe('auth handlers', () => {
         .where(eq(usersTable.id, user.id))
         .execute();
 
-      await expect(login(testLoginInput)).rejects.toThrow(/account is inactive/i);
+      const correctPasswordLogin: LoginInput = {
+        username: 'testuser',
+        password: 'password123'
+      };
+
+      await expect(login(correctPasswordLogin)).rejects.toThrow(/account is inactive/i);
     });
   });
 

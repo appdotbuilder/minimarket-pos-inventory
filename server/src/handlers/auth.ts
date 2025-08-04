@@ -23,9 +23,10 @@ export async function login(input: LoginInput): Promise<{ user: User; token: str
       throw new Error('Account is inactive');
     }
 
-    // In a real implementation, you would verify the password hash here
-    // For now, we'll assume password is valid if user exists and is active
-    if (input.password !== 'password') {
+    // In a real implementation, you would use a proper hashing library (e.g., bcrypt.compare)
+    // For this demo, we'll simulate it by prefixing the input password with "hashed_"
+    const inputPasswordHash = `hashed_${input.password}`; // Generate the expected hash from input
+    if (inputPasswordHash !== user.password_hash) { // Compare it with the stored hash
       throw new Error('Invalid credentials');
     }
 
